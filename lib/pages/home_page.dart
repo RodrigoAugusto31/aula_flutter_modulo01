@@ -1,92 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import '../data/database.dart';
+import 'package:provider/provider.dart';
+import '../Provider/tasks_provider.dart';
 import '../util/dialog_box.dart';
 import '../util/todo_tile.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
+  Widget build(BuildContext context) {
+    final db = Provider.of<ToDoProvider>(context);
+    final _controller = TextEditingController();
 
-class _HomePageState extends State<HomePage> {
-  final _myBox = Hive.box('mybox');
-  ToDoDataBase db = ToDoDataBase();
-  final _controller = TextEditingController();
-
-  @override
-  void initState() {
-    if (_myBox.get("TODOLIST") == null) {
-      db.createInitialData();
-    } else {
-      db.loadData();
+    Future<void> createNewTask() async {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _controller,
+            onSave: (taskName) => db.saveNewTask(taskName, _controller),
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        },
+      );
     }
 
-    super.initState();
-  }
-
-  void checkBoxChanged(bool? value, int index) {
-    setState(() {
-      db.toDoList[index][1] = !db.toDoList[index][1];
-    });
-    db.updateDataBase();
-  }
-
-  void saveNewTask() async {
-  String location = await db.getLocation();
-  setState(() {
-    db.toDoList.add([_controller.text, false, location]);
-    _controller.clear();
-  });
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pop();
-  db.updateDataBase();
-}
-
-  void createNewTask() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DialogBox(
-          controller: _controller,
-          onSave: saveNewTask,
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
-
-  void deleteTask(int index) {
-    setState(() {
-      db.toDoList.removeAt(index);
-    });
-    db.updateDataBase();
-  }
-
-  void updateTask(int index) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DialogBox(
-          controller: _controller,
-          onSave: () {
-            setState(() {
-              db.toDoList[index][0] = _controller.text;
-              _controller.clear();
-            });
-            Navigator.of(context).pop();
-            db.updateDataBase();
-          },
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.yellow[200],
       appBar: AppBar(
@@ -115,12 +53,27 @@ class _HomePageState extends State<HomePage> {
             taskName: db.toDoList[index][0],
             taskCompleted: db.toDoList[index][1],
             location: db.toDoList[index][2],
-            onChanged: (value) => checkBoxChanged(value, index),
-            editFunction: (context) => updateTask(index),
-            deleteFunction: (context) => deleteTask(index),
+            onChanged: (value) => db.checkBoxChanged(value, index),
+            editFunction: (context) => updateTask(context, db, index),
+            deleteFunction: (context) => db.deleteTask(index),
           );
         },
       ),
+    );
+  }
+
+  void updateTask(BuildContext context, ToDoProvider db, int index) {
+    final _controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          onSave: (taskName) => db.updateTask(index, taskName, _controller),
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
     );
   }
 }
