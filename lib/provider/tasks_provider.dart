@@ -17,6 +17,8 @@ class ToDoProvider with ChangeNotifier {
     final savedList = _myBox.get("TODOLIST");
     if (savedList != null) {
       toDoList = List<List<dynamic>>.from(savedList);
+    } else {
+      createInitialData();
     }
     notifyListeners();
   }
