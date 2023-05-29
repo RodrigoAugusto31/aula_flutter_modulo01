@@ -6,6 +6,7 @@ class DialogBox extends StatelessWidget {
   final Function(String) onSave;
   final VoidCallback onCancel;
 
+  // ignore: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
   DialogBox({
     required this.controller,
     required this.onSave,

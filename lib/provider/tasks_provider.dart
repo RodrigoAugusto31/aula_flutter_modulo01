@@ -14,7 +14,11 @@ class ToDoProvider with ChangeNotifier {
   }
 
   void loadData() {
-    toDoList = _myBox.get("TODOLIST") ?? [];
+    final savedList = _myBox.get("TODOLIST");
+    if (savedList != null) {
+      toDoList = List<List<dynamic>>.from(savedList);
+    }
+    notifyListeners();
   }
 
   void updateDataBase() {

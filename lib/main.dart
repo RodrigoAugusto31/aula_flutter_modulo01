@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ChangeNotifierProvider(
-        create: (_) => ToDoProvider(),
+        create: (context) => ToDoProvider(),
         child: const HomePage(),
       ),
       theme: ThemeData(primarySwatch: Colors.yellow),

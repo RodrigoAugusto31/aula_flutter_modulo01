@@ -10,6 +10,7 @@ class ToDoTile extends StatelessWidget {
   final Function(BuildContext)? deleteFunction;
   final Function(BuildContext)? editFunction;
 
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   ToDoTile({
     required this.taskName,
     required this.location,

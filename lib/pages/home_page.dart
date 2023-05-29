@@ -10,20 +10,29 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = Provider.of<ToDoProvider>(context);
-    final _controller = TextEditingController();
+    final controller = TextEditingController();
 
     Future<void> createNewTask() async {
       showDialog(
         context: context,
         builder: (context) {
           return DialogBox(
-            controller: _controller,
-            onSave: (taskName) => db.saveNewTask(taskName, _controller),
+            controller: controller,
+            onSave: (taskName) => db.saveNewTask(taskName, controller),
             onCancel: () => Navigator.of(context).pop(),
           );
         },
       );
     }
+
+    void loadData() {
+      db.loadData();
+    }
+
+
+    WidgetsBinding.instance.addPostFrameCallback((context) {
+      loadData();
+    });
 
     return Scaffold(
       backgroundColor: Colors.yellow[200],
@@ -63,14 +72,14 @@ class HomePage extends StatelessWidget {
   }
 
   void updateTask(BuildContext context, ToDoProvider db, int index) {
-    final _controller = TextEditingController();
+    final controller = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) {
         return DialogBox(
-          controller: _controller,
-          onSave: (taskName) => db.updateTask(index, taskName, _controller),
+          controller: controller,
+          onSave: (taskName) => db.updateTask(index, taskName, controller),
           onCancel: () => Navigator.of(context).pop(),
         );
       },
