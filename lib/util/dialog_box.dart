@@ -49,7 +49,7 @@ class DialogBox extends StatelessWidget {
                   ),
                   onPressed: () {
                     onCancel();
-                    Navigator.pop(context); // Close the dialog
+                    //Navigator.pop(context); // Close the dialog
                   },
                   child: const Text("Cancelar"),
                 ),
