@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../Provider/tasks_provider.dart';
+import '../routes/routes_path.dart';
 import '../util/dialog_box.dart';
 import '../util/todo_tile.dart';
 
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           return DialogBox(
             controller: controller,
             onSave: (taskName) => db.saveNewTask(taskName, controller),
-            onCancel: () => Navigator.of(context).pop(),
+            onCancel: () => Navigator.of(context).pop(RoutePaths.HOME_PAGE),
           );
         },
       );
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
         return DialogBox(
           controller: controller,
           onSave: (taskName) => db.updateTask(index, taskName, controller),
-          onCancel: () => Navigator.of(context).pop(),
+          onCancel: () => Navigator.of(context).pop(RoutePaths.HOME_PAGE),
         );
       },
     );
