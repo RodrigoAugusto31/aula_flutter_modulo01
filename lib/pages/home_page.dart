@@ -88,10 +88,27 @@ class _HomePageState extends State<HomePage> {
         children: [
           if (imageFile != null) ...[
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Image.file(imageFile!),
-            ),
-            const Divider(),
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: [
+        CircleAvatar(
+          radius: 40,
+          backgroundImage: FileImage(imageFile!),
+        ),
+        const SizedBox(height: 8),
+        Text('Usuário:'),
+        const SizedBox(height: 8),
+        TextFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Digite o nome',
+          ),
+          // Adicione um controlador se desejar acessar o valor digitado posteriormente.
+        ),
+      ],
+    ),
+  ),
+  const Divider(),
           ],
           Expanded(
             child: ListView.builder(
