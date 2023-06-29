@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "161051287799",
+    "project_id": "aulafluttermodulo02",
+    "storage_bucket": "aulafluttermodulo02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161051287799:android:d1bbe8f187231c545673f2",
+        "android_client_info": {
+          "package_name": "com.example.desenvolvimento_flutter_modulo_01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161051287799-3cp36sg3ctbdafkagk7qdjgd14si3tpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLG_LsbOCQvSg649NdRXjeRO6DBRaR7ZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161051287799-3cp36sg3ctbdafkagk7qdjgd14si3tpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

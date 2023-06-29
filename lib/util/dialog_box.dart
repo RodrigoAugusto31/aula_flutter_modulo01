@@ -38,7 +38,7 @@ class DialogBox extends StatelessWidget {
                   ),
                   onPressed: () {
                     onSave(controller.text);
-                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context);
                   },
                   child: const Text("Salvar"),
                 ),
@@ -49,7 +49,6 @@ class DialogBox extends StatelessWidget {
                   ),
                   onPressed: () {
                     onCancel();
-                    //Navigator.pop(context); // Close the dialog
                   },
                   child: const Text("Cancelar"),
                 ),
