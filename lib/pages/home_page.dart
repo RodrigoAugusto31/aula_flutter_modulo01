@@ -1,11 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../Provider/tasks_provider.dart';
 import '../util/dialog_box.dart';
 import '../util/todo_tile.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final picker = ImagePicker();
+  File? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +36,20 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    Future<void> openCamera() async {
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        setState(() {
+          imageFile = File(pickedFile.path);
+        });
+      }
+    }
+
     void loadData() {
       db.loadData();
     }
 
-
-    WidgetsBinding.instance.addPostFrameCallback((context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       loadData();
     });
 
@@ -51,13 +70,29 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createNewTask,
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: createNewTask,
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: openCamera,
+            child: const Icon(Icons.camera_alt),
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: db.toDoList.length,
         itemBuilder: (context, index) {
+          if (index == 0 && imageFile != null) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.file(imageFile!),
+            );
+          }
           return ToDoTile(
             taskName: db.toDoList[index][0],
             taskCompleted: db.toDoList[index][1],
