@@ -11,7 +11,6 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -38,13 +37,13 @@ class _HomePageState extends State<HomePage> {
     }
 
     Future<void> openCamera() async {
-      final pickedFile = await picker.pickImage(source: ImageSource.camera);
-      if (pickedFile != null) {
-        setState(() {
-          imageFile = File(pickedFile.path);
-        });
-      }
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
     }
+  }
 
     void loadData() {
       db.loadData();
@@ -85,24 +84,31 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: db.toDoList.length,
-        itemBuilder: (context, index) {
-          if (index == 0 && imageFile != null) {
-            return Padding(
+      body: Column(
+        children: [
+          if (imageFile != null) ...[
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: Image.file(imageFile!),
-            );
-          }
-          return ToDoTile(
-            taskName: db.toDoList[index][0],
-            taskCompleted: db.toDoList[index][1],
-            location: db.toDoList[index][2],
-            onChanged: (value) => db.checkBoxChanged(value, index),
-            editFunction: (context) => updateTask(context, db, index),
-            deleteFunction: (context) => db.deleteTask(index),
-          );
-        },
+            ),
+            const Divider(),
+          ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: db.toDoList.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  taskName: db.toDoList[index][0],
+                  taskCompleted: db.toDoList[index][1],
+                  location: db.toDoList[index][2],
+                  onChanged: (value) => db.checkBoxChanged(value, index),
+                  editFunction: (context) => updateTask(context, db, index),
+                  deleteFunction: (context) => db.deleteTask(index),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
