@@ -97,16 +97,9 @@ class _HomePageState extends State<HomePage> {
           radius: 40,
           backgroundImage: FileImage(imageFile!),
         ),
-        const SizedBox(height: 8),
-        const Text('Usuário:'),
-        const SizedBox(height: 8),
-        TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Digite o nome',
-          ),
-          // Adicione um controlador se desejar acessar o valor digitado posteriormente.
-        ),
+        const SizedBox(height: 5),
+        const Text('Foto de Usuário'),
+        const SizedBox(height: 5),
       ],
     ),
   ),

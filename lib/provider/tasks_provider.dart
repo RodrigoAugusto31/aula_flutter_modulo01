@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:location/location.dart';
+import 'package:http/http.dart' as http;
 
 class ToDoProvider with ChangeNotifier {
   final _myBox = Hive.box('mybox');
@@ -8,8 +11,8 @@ class ToDoProvider with ChangeNotifier {
 
   void createInitialData() {
     toDoList = [
-      ["Fazer compras", false, "-23.8965422 : -38.3306205"],
-      ["Abastecer o carro", false, "-53.9975523 : -18.4307405"],
+      ["Fazer compras", false, "São Paulo"],
+      ["Abastecer o carro", false, "Campinas"],
     ];
   }
 
@@ -44,8 +47,24 @@ class ToDoProvider with ChangeNotifier {
       if (permissionGranted != PermissionStatus.granted) return "";
     }
     locationData = await location.getLocation();
-    return "${locationData.latitude} : ${locationData.longitude}";
+  final cityName = await getCityName(locationData.latitude!, locationData.longitude!);
+  return cityName;
   }
+
+  Future<String> getCityName(double latitude, double longitude) async {
+  final apiKey = '997e0b321b18947f5168698878d11f08';
+  final url = 'http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey';
+  
+  final response = await http.get(Uri.parse(url));
+  
+  if (response.statusCode == 200) {
+    final json = jsonDecode(response.body);
+    final cityName = json['name'];
+    return cityName;
+  } else {
+    throw Exception('Failed to get city name');
+  }
+}
 
   void checkBoxChanged(bool? value, int index) {
     toDoList[index][1] = !toDoList[index][1];
