@@ -72,20 +72,32 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: createNewTask,
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(width: 16),
-          FloatingActionButton(
-            onPressed: openCamera,
-            child: const Icon(Icons.camera_alt),
-          ),
-        ],
+       bottomNavigationBar: BottomAppBar(
+      child: Container(
+        height: kToolbarHeight,
+        color: Colors.yellow[200], 
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              color: Colors.yellow[200], 
+              child: IconButton(
+                onPressed: createNewTask,
+                icon: Icon(Icons.add),
+              ),
+            ),
+            SizedBox(width: 16),
+            Container(
+              color: Colors.yellow[200], 
+              child: IconButton(
+                onPressed: openCamera,
+                icon: Icon(Icons.camera_alt),
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
       body: Column(
         children: [
           if (imageFile != null) ...[
