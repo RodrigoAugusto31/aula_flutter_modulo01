@@ -33,11 +33,11 @@ Widget build(BuildContext context) {
     routes: {
       RoutePaths.SIGN_IN_SCREEN: (context) => ChangeNotifierProvider(
         create: (context) => ToDoProvider(),
-        child: SignInScreen(),
+        child: const SignInScreen(),
       ),
       RoutePaths.HOME_PAGE: (context) => ChangeNotifierProvider(
         create: (context) => ToDoProvider(),
-        child: HomePage(),
+        child: const HomePage(),
       ),
     },
   );

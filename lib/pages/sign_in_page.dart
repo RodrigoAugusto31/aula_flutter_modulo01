@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../routes/routes_path.dart';
@@ -20,13 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = true;
     });
-    String email = emailController.text;
-    String password = passwordController.text;
     try {
-      final user = await auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Usuário autenticado."),
         duration: Duration(seconds: 2),
@@ -34,8 +27,8 @@ class _SignInScreenState extends State<SignInScreen> {
       Navigator.of(context).pushReplacementNamed(RoutePaths.HOME_PAGE);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("${e}"),
-        duration: Duration(seconds: 2),
+        content: Text("$e"),
+        duration: const Duration(seconds: 2),
       ));
     }
     setState(() {
