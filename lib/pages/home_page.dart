@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+import 'package:hive/hive.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +23,29 @@ class _HomePageState extends State<HomePage> {
   final picker = ImagePicker();
   File? imageFile;
 
+  final String _imageBoxKey = 'imageBox';
+  String? imagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _initHive();
+  }
+
+  Future<void> _initHive() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    await Hive.openBox(_imageBoxKey);
+    final box = Hive.box(_imageBoxKey);
+    imagePath = box.get('imagePath') as String?;
+    setState(() {});
+  }
+
+  Future<void> _saveImageToHive(String imagePath) async {
+    final box = Hive.box(_imageBoxKey);
+    await box.put('imagePath', imagePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     final db = Provider.of<ToDoProvider>(context);
@@ -39,17 +65,22 @@ class _HomePageState extends State<HomePage> {
     }
 
     Future<void> openCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = File(pickedFile.path);
-      });
-    }
+  final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  if (pickedFile != null) {
+    setState(() {
+      imageFile = File(pickedFile.path);
+      imagePath = pickedFile.path;
+    });
+    await _saveImageToHive(imagePath!);
   }
+}
 
     void loadData() {
-      db.loadData();
-    }
+  final box = Hive.box(_imageBoxKey);
+  imagePath = box.get('imagePath') as String?;
+  setState(() {});
+  db.loadData();
+}
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadData();
@@ -105,22 +136,24 @@ class _HomePageState extends State<HomePage> {
   ),
 ),
       body: Column(
-        children: [
-          if (imageFile != null) ...[
-            Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: FileImage(imageFile!),
-        ),
-        const SizedBox(height: 5),
-        const Text('Foto de Usuário'),
-        const SizedBox(height: 5),
-      ],
-    ),
-  ),
+        if (imageFile != null || imagePath != null) ...[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: imageFile != null
+                      ? FileImage(imageFile!)
+                      : FileImage(File(imagePath!)),
+                ),
+                const SizedBox(height: 5),
+                const Text('Foto de Usuário'),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
   const Divider(),
           ],
           Expanded(
