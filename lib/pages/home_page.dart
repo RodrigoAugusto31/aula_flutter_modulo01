@@ -73,31 +73,37 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
        bottomNavigationBar: BottomAppBar(
-      child: Container(
-        height: kToolbarHeight,
-        color: Colors.yellow[200], 
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              color: Colors.yellow[200], 
-              child: IconButton(
-                onPressed: createNewTask,
-                icon: Icon(Icons.add),
-              ),
+  child: Container(
+    height: kToolbarHeight,
+    color: Colors.yellow[200], 
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          child: ElevatedButton(
+            onPressed: createNewTask,
+            child: Icon(Icons.add),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black, backgroundColor: Colors.yellow[200], 
+              shape: CircleBorder(), 
             ),
-            SizedBox(width: 16),
-            Container(
-              color: Colors.yellow[200], 
-              child: IconButton(
-                onPressed: openCamera,
-                icon: Icon(Icons.camera_alt),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        SizedBox(width: 1),
+        Container(
+          child: ElevatedButton(
+            onPressed: openCamera,
+            child: Icon(Icons.camera_alt),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black, backgroundColor: Colors.yellow[200], 
+              shape: CircleBorder(), 
+            ),
+          ),
+        ),
+      ],
     ),
+  ),
+),
       body: Column(
         children: [
           if (imageFile != null) ...[
@@ -132,6 +138,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
+          const SizedBox(height: 16), 
         ],
       ),
     );
