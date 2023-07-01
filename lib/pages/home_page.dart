@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:calculadora_pk/calculadora_pk.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
 
@@ -103,7 +104,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-       bottomNavigationBar: BottomAppBar(
+bottomNavigationBar: BottomAppBar(
   child: Container(
     height: kToolbarHeight,
     color: Colors.yellow[200], 
@@ -115,7 +116,8 @@ class _HomePageState extends State<HomePage> {
             onPressed: createNewTask,
             child: Icon(Icons.add),
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black, backgroundColor: Colors.yellow[200], 
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.yellow[200], 
               shape: CircleBorder(), 
             ),
           ),
@@ -126,7 +128,23 @@ class _HomePageState extends State<HomePage> {
             onPressed: openCamera,
             child: Icon(Icons.camera_alt),
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black, backgroundColor: Colors.yellow[200], 
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.yellow[200], 
+              shape: CircleBorder(), 
+            ),
+          ),
+        ),
+        SizedBox(width: 1),
+        Container(
+          child: ElevatedButton(
+            onPressed: () {
+              Calculator calculator = Calculator();
+              calculator.addOne(2);// Chama o método para abrir a calculadora
+            },
+            child: Icon(Icons.calculate),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.yellow[200], 
               shape: CircleBorder(), 
             ),
           ),

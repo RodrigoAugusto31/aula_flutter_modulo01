@@ -7,11 +7,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'Provider/tasks_provider.dart';
 import 'firebase_options.dart';
-import 'package:calculadora_pk/calculadora_pk.dart';
 
 void main() async {
-  final Calculator calculator = Calculator();
-  print(calculator.addOne(1));
   await Hive.initFlutter();
   await Hive.openBox('mybox');
 
