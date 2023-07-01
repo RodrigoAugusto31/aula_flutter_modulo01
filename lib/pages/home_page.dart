@@ -139,7 +139,7 @@ bottomNavigationBar: BottomAppBar(
           child: ElevatedButton(
             onPressed: () {
               Calculator calculator = Calculator();
-              calculator.addOne(2);// Chama o método para abrir a calculadora
+              calculator.openCalculator(context);// Chama o método para abrir a calculadora
             },
             child: Icon(Icons.calculate),
             style: ElevatedButton.styleFrom(

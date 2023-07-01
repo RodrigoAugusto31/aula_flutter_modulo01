@@ -68,7 +68,7 @@ class ToDoTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Location: $location',
+                      'Localização: $location',
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
