@@ -25,6 +25,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  calculadora_pk:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "8b226178b71ba4285bba588e52e76183478810c1"
+      url: "https://github.com/RodrigoAugusto31/calculadora_pk.git"
+    source: git
+    version: "0.0.1"
   characters:
     dependency: transitive
     description:
