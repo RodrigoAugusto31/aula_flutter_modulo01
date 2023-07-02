@@ -30,7 +30,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "9cbfefd80526a76d5fc8895dcafa41ac99dfc37e"
+      resolved-ref: "9c09ce208bf1d46c0989e1152948e17b6915d880"
       url: "https://github.com/RodrigoAugusto31/calculadora_pk.git"
     source: git
     version: "0.0.1"
